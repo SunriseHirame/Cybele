@@ -1,0 +1,16 @@
+{
+    "name": "Hirame.Cybele.Tests",
+    "references": [
+        "Hirame.Cybele"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}

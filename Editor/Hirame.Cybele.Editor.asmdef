@@ -1,0 +1,16 @@
+{
+    "name": "Hirame.Cybele.Editor",
+    "references": [
+        "Hirame.Cybele"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": []
+}
