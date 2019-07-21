@@ -1,7 +1,8 @@
 {
     "name": "Hirame.Cybele.Editor",
     "references": [
-        "Hirame.Cybele"
+        "Hirame.Cybele",
+        "Unity.EditorCoroutines.Editor"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [
@@ -12,5 +13,6 @@
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
-    "defineConstraints": []
+    "defineConstraints": [],
+    "versionDefines": []
 }
