@@ -1,6 +1,8 @@
 ﻿using System.Diagnostics;
+using Unity.Mathematics;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 namespace Hirame.Cybele
 {
@@ -10,9 +12,16 @@ namespace Hirame.Cybele
         [Range (0, 1)]
         [SerializeField] private float onChance = 0.5f;
         
+        [Header ("Axial Noise")]
         [SerializeField] private bool useNoiseCurves;
-        [SerializeField] private AnimationCurve xNoiseCurve = AnimationCurve.Constant (0, 1, 1);
-        [SerializeField] private AnimationCurve yNoiseCurve = AnimationCurve.Constant (0, 1, 1);
+        [SerializeField] private AnimationCurve noiseCurveX = AnimationCurve.Constant (0, 1, 1);
+        [SerializeField] private AnimationCurve noiseCurveY = AnimationCurve.Constant (0, 1, 1);
+
+        [Header ("Radial Noise")]
+        [SerializeField] private bool useRadialNoise;
+        [Range (0, 1)] [SerializeField] private float centerX = 0.5f;
+        [Range (0, 1)] [SerializeField] private float centerY = 0.5f;
+        [SerializeField] private AnimationCurve radianNoise = AnimationCurve.Constant (0, 1, 1);
 
         public int[,] GetNoise (int width, int height)
         {
@@ -25,9 +34,7 @@ namespace Hirame.Cybele
             {
                 for (var y = 1; y < height - 1; y++)
                 {
-                    var chance = useNoiseCurves
-                        ? onChance * GetCurveNoise (x, y, width, height)
-                        : onChance;
+                    var chance = onChance * GetCurveNoise (x, y, width, height);
                     
                     if (Random.value > chance)
                         continue;
@@ -43,10 +50,27 @@ namespace Hirame.Cybele
 
         private float GetCurveNoise (int x, int y, int width, int height)
         {
-            var xNoise = xNoiseCurve.Evaluate (x / (float) width);
-            var yNoise = yNoiseCurve.Evaluate (y / (float) height);
+            var noise = 1f;
 
-            return xNoise * yNoise;
+            if (useNoiseCurves)
+            {
+                var xNoise = noiseCurveX.Evaluate (x / (float) width);
+                var yNoise = noiseCurveY.Evaluate (y / (float) height);
+
+                noise *= xNoise * yNoise;
+            }
+
+
+            if (useRadialNoise)
+            {
+                var dx = (x / (float) width - centerX) * 2;
+                var dy = (y / (float) height - centerY) * 2;
+                
+                var distance = math.sqrt (dx * dx + dy * dy);
+                noise *= radianNoise.Evaluate (distance);
+            }
+            
+            return noise;
         }
     }
 
