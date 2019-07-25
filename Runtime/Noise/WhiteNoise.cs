@@ -2,7 +2,7 @@
 using Unity.Mathematics;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
-using Random = UnityEngine.Random;
+using Random = Unity.Mathematics.Random;
 
 namespace Hirame.Cybele
 {
@@ -23,7 +23,7 @@ namespace Hirame.Cybele
         [Range (0, 1)] [SerializeField] private float centerY = 0.5f;
         [SerializeField] private AnimationCurve radianNoise = AnimationCurve.Constant (0, 1, 1);
 
-        public int[,] GetNoise (int width, int height)
+        public int[,] GetNoise (int width, int height, Random random = new Random ())
         {
             var timer = new Stopwatch ();
             timer.Start ();
@@ -36,7 +36,7 @@ namespace Hirame.Cybele
                 {
                     var chance = onChance * GetCurveNoise (x, y, width, height);
                     
-                    if (Random.value > chance)
+                    if (random.NextFloat() > chance)
                         continue;
                         
                     noise[x, y] = 1;
