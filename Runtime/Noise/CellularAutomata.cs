@@ -13,7 +13,7 @@ namespace Hirame.Cybele
         
         [Range (1, 16)]
         [SerializeField] private int passesToApply;
-        
+
         public void Apply (ref int[,] grid)
         {
             var timer = new Stopwatch ();
